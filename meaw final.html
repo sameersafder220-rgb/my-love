@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cute Surprise</title>
+<style>
+  body{
+    margin:0;
+    font-family: Inter, sans-serif;
+    background: linear-gradient(135deg, #1a1f35, #0b1220);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+  }
+
+  .backdrop{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0.55);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    animation: fade .3s ease;
+  }
+
+  .modal{
+    position:relative;
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    padding:28px 24px 34px;
+    border-radius:16px;
+    width:320px;
+    text-align:center;
+    backdrop-filter: blur(10px);
+    box-shadow:0 8px 25px rgba(0,0,0,0.4);
+    animation: pop .35s ease;
+  }
+
+  /* Bunny container */
+  .bunny{
+    position:absolute;
+    top:-75px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:64px;
+  }
+
+  /* Bunny arms */
+  .arm-left, .arm-right{
+    position:absolute;
+    top:-10px;
+    font-size:42px;
+  }
+  .arm-left{ left:-35px; transform:rotate(20deg); }
+  .arm-right{ right:-35px; transform:rotate(-20deg); }
+
+  button{
+    margin-top:18px;
+    padding:10px 18px;
+    background: linear-gradient(135deg, #ff7ab6, #ff9ad6);
+    border:0;
+    border-radius:10px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    color:#1a1a1a;
+    box-shadow:0 4px 12px rgba(255,122,182,0.3);
+    transition: transform .15s ease;
+  }
+
+  button:hover{ transform: scale(1.05); }
+  button:active{ transform: scale(0.98); }
+
+  #final{
+    display:none;
+    font-size:28px;
+    text-align:center;
+    animation: pop .4s ease;
+  }
+
+  @keyframes pop{
+    0%{ transform: scale(0.8); opacity:0; }
+    100%{ transform: scale(1); opacity:1; }
+  }
+
+  @keyframes fade{
+    from{ opacity:0; }
+    to{ opacity:1; }
+  }
+
+  .confetti-piece{
+    position:fixed;
+    top:-10px;
+    font-size:20px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{
+    0%{ transform: translateY(-10px) rotate(0deg); opacity:1; }
+    100%{ transform: translateY(110vh) rotate(360deg); opacity:1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Popup 1 -->
+<div class="backdrop" id="popup1">
+  <div class="modal">
+    <div class="bunny">🧸</div>
+    <div class="arm-left">🧸</div>
+    <div class="arm-right">🧸</div>
+    <div style="font-size:48px; margin-bottom:10px;">🧸</div>
+    <h2>Want to see something cute, My ma'am? 🩷</h2>
+    <button onclick="openSecond()">Yes</button>
+  </div>
+</div>
+
+<!-- Popup 2 -->
+<div class="backdrop" id="popup2" style="display:none;">
+  <div class="modal">
+    <div class="bunny">🧸</div>
+    <div class="arm-left">🧸</div>
+    <div class="arm-right">🧸</div>
+    <div style="font-size:48px; margin-bottom:10px;">🧸</div>
+    <h2>Are you ready, ma'am? ✨</h2>
+    <button onclick="finalMsg()">Yes</button>
+  </div>
+</div>
+
+<!-- Final message -->
+<div id="final">You are the cutest person in the world, Rizma😁 💖</div>
+
+<script>
+function openSecond(){
+  document.getElementById('popup1').style.display='none';
+  document.getElementById('popup2').style.display='flex';
+}
+
+function finalMsg(){
+  document.getElementById('popup2').style.display='none';
+  document.getElementById('final').style.display='block';
+  spawnConfetti();
+}
+
+function spawnConfetti(){
+  const emojis = ['💖','✨','💕','🌸','💗'];
+  for(let i=0;i<25;i++){
+    let span = document.createElement('span');
+    span.classList.add('confetti-piece');
+    span.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    span.style.left = Math.random()*100 + 'vw';
+    span.style.animationDuration = 3 + Math.random()*2 + 's';
+    document.body.appendChild(span);
+    setTimeout(()=> span.remove(), 6000);
+  }
+}
+</script>
+
+</body>
+</html>
+
+  
